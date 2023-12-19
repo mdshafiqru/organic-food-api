@@ -16,6 +16,7 @@ const authController = require('../controllers/admin/auth_controller');
 const categoryController = require('../controllers/admin/category_controller');
 const productController = require('../controllers/admin/product_controller');
 const settingController = require('../controllers/admin/setting_controller');
+const orderController = require('../controllers/admin/order_controller');
 
 module.exports = (express) => {
     const router = express.Router();
@@ -39,7 +40,9 @@ module.exports = (express) => {
     router.post('/create-app-info', admin, settingController.createAppInfo);
     router.get('/get-app-info', admin, settingController.getAppInfo);
 
-
+    // orders
+    router.get('/all-orders/skip=:skip', admin, orderController.allOrders);
+    router.post('/update-order-status', admin, orderController.updateOrderStatus);
 
     //category
     router.post('/create-category', admin, categoryValidator.createCategory , categoryController.createCategory);

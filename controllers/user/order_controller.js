@@ -129,8 +129,6 @@ const removeFromCart = async (req, res) => {
 
 const createAddress = async (req, res) => {
     let {divisionId, district, thana, location } = req.body;
-
-    console.log(req.body);
     
     try {
         const division = await Division.findOne({_id: divisionId });
@@ -299,12 +297,16 @@ const allOrders = async (req, res) => {
             },
 
             {
+                $sort: {createdAt: -1}
+            },
+
+            {
                 $skip: skipInt ?? 0
             },
     
-            {
-                $limit: limit 
-            },
+            // {
+            //     $limit: limit 
+            // },
 
             {
                 $lookup: {
@@ -376,11 +378,6 @@ const allOrders = async (req, res) => {
                     orderItems: { $push: '$orderItems' },
                 },
             },
-
-            {
-                $sort: { _id: -1 } // Sort by _id in descending order
-            },
-            
 
         ]
   
