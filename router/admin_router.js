@@ -22,7 +22,7 @@ module.exports = (express) => {
 
 
     router.post('/login', authValidator.login, authController.login);
-    // router.post('/register', authValidator.register , authController.register);
+    router.post('/register', authValidator.register , authController.register);
 
     //slider
     router.post('/create-slider', admin, sliderImageUpload, settingController.createSlider);
