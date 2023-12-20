@@ -26,7 +26,7 @@ const createProduct = async (req, res) => {
 
         const product = await Product.create({name, size, image: imagePath, categoryId, shortDesc, longDesc, price});
 
-        return res.status(200).json({message: "Product created successfully!", success: true, product});
+        return res.status(200).json({message: "Product created successfully!", success: true});
 
         
     } catch (error) {
@@ -76,7 +76,7 @@ const editProduct = async (req, res) => {
 
         await product.save();
 
-        return res.status(200).json({message: "Product Updated successfully!", success: true, product});
+        return res.status(200).json({message: "Product Updated successfully!", success: true});
 
         
     } catch (error) {
@@ -98,8 +98,7 @@ const allProducts = async (req, res) => {
           if (isNaN(skipInt)) {
             return res.status(400).json({message: "skip should be a number", success: false});
           }
-          const limit = 10;
-
+ 
           const pipeline = [
 
             {
@@ -107,16 +106,16 @@ const allProducts = async (req, res) => {
             },
     
             {
-              $limit: limit 
-            },
-
-            {
                 $lookup: {
                     from: "categories",               
                     localField: "categoryId",       
                     foreignField: "_id",          
                     as: "category"              
                 }
+            },
+
+            {
+                $unwind: "$category"
             },
     
           ]
